@@ -86,7 +86,6 @@ public class OrlandoHarleyDMS
                 in.nextLine();
             }
         }while(badInput);
-
         return choice;
     } // end getInput method
 

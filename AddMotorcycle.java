@@ -13,6 +13,8 @@ import java.util.*;
 public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
 {
     // Data Fields
+    enum brandAbbrevation {HD, KAW, HON, SUZ, BMW, IND, DUC };
+
     int year;
     int make;
     String model;
@@ -21,7 +23,7 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
     String modelNumber;
     String[] availabilityStatus;
     Scanner in = new Scanner(System.in);
-    enum brandAbbrevation {HD, KAW, HON, SUZ, BMW, IND, DUC };
+
 
     public AddMotorcycle()
     {
@@ -35,6 +37,7 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
 
     public void setYear(int year)
     {
+        // Constants
         final int minYear = 1990;
         final int maxYear = Year.now().getValue();
 
@@ -43,7 +46,7 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
             System.out.println("Year must be within range from " + minYear + " to " + maxYear + ": ");
             System.out.print("Enter year:");
             year = in.nextInt();
-        }
+        } // end while
         this.year = year;
     } // end mutator method
 
@@ -54,6 +57,16 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
 
     public void setMake(int make)
     {
+        // Constants
+        final int minMakeOption = 1;
+        final int maxMakeOption = 7;
+
+        while(make < minMakeOption || make > maxMakeOption)
+        {
+            System.out.println("Error: not an option. Please try again...");
+            System.out.print("Enter make option: ");
+            make = in.nextInt();
+        } // end while
         this.make = make;
     } // end mutator method
 
@@ -64,6 +77,24 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
 
     public void setModel(String model)
     {
+
+        while(model.length() == 0)
+        {
+            System.out.println("Error: Cannot be null. Please try again...");
+            System.out.print("Enter model: ");
+            model = in.nextLine();
+        }
+
+        // Capitalization - First Letter
+        String[] array = model.split(" ");
+        StringBuffer temp = new StringBuffer();
+        for(int i = 0; i < array.length; i++)
+        {
+            temp.append(Character.toUpperCase(array[i].charAt(0)))
+                    .append(array[i].substring(1)).append(" ");
+        }
+        model = temp.toString();
+
         this.model = model;
     } // end mutator method
 
@@ -107,6 +138,14 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
         this.availabilityStatus = availabilityStatus;
     } // end mutator method
 
+    public String toString()
+    {
+        String result = "";
+
+
+        return result;
+    } // end toString method
+
     public void createMotorcycle()
     {
         boolean badInput = true;
@@ -114,14 +153,30 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
         {
             try
             {
-                // Input
+                // Input - Year
                 System.out.println("Year range acceptance 1990 - current year");
                 System.out.print("Enter the year: ");
                 year = in.nextInt();
                 setYear(year);
 
-                setMake(getMakeOption());
+                // Input - Make
+                System.out.println("Selection of Brands:");
+                setMake(getOption());
 
+                // Input - Model
+                in.nextLine();
+                System.out.print("Enter the model: ");
+                model = in.nextLine();
+                setModel(model);
+                //  System.out.println("Model: " + getModel()); May Delete SOON
+
+                // Input - Category
+
+                // Input - Price
+
+                // Input - Model Number
+
+                // Input - Availability status
 
                 badInput = false;
             }
@@ -134,11 +189,9 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
         }while(badInput);
     } // end createMotorcycle method
 
-    public int getMakeOption()
+    public int getOption()
     {
-        System.out.println("List of Brands:");
         String option = "";
-
         option += "[1] " + brandAbbrevation.HD  + " (Harley-Davidson)\n";
         option += "[2] " + brandAbbrevation.KAW + " (Kawasaki)\n";
         option += "[3] " + brandAbbrevation.HON + " (Honda)\n";
@@ -148,7 +201,7 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
         option += "[7] " + brandAbbrevation.DUC + " (Ducati)\n";
 
         return getUserInput(option);
-    }
+    } // end getMakeOption method
 
     public int getUserInput(String option)
     {
@@ -166,11 +219,11 @@ public class AddMotorcycle extends Motorcycle implements AvailabilityStatusLog
             {
                 System.out.println("Error: Invalid Input. Try again...");
                 badInput = true;
+                in.nextLine();
             }
         }while(badInput);
         return make;
-    } // end getInput method
+    } // end getUserInput method
 
 
-
-}
+} // end AddMotorcycle class
