@@ -6,6 +6,7 @@
  * Purpose:...
  */
 
-public interface AvailabilityStatusLog
+public class FileHandler
 {
-}
+
+} // end Motorcycle class
