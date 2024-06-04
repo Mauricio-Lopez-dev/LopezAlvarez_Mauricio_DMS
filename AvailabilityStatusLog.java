@@ -8,4 +8,5 @@
 
 public interface AvailabilityStatusLog
 {
-}
+    public int availabilityStatus();
+} // end AvailabilityStatusLog interface
