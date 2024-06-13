@@ -68,7 +68,7 @@ public class OrlandoHarleyDMS
                     break;
 
                 case 4: // Availability status log
-                    displayAllMotorcycles(motorcycleList);
+                    AvailabilityLog aL = new AvailabilityLog(path, motorcycleList);
                     break;
 
                 case 5:  // Exit System
