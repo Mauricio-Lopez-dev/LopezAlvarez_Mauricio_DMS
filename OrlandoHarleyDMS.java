@@ -33,16 +33,18 @@ public class OrlandoHarleyDMS
             {
                 case 1: // Add Motorcycle
                     motorcycleList.add(new AddMotorcycle(path));
+                    displayAllMotorcycles(motorcycleList);
                     break;
 
                 case 2: // Remove Motorcycle
-                    System.out.println("\nCurrent list of Motorcycles:");
-                    System.out.println("ID, Year, Make, Model, Price, Status");
-
                     if(!motorcycleList.isEmpty())
                     {
+                        System.out.println("\nCurrent list of Motorcycles:");
+                        System.out.println("ID, Year, Make, Model, Price, Status");
                         displayAllMotorcycles(motorcycleList);
-                        motorcycleList.remove(new RemoveMotorcycle(path));
+                        motorcycleList.clear();
+                        motorcycleList.add(new RemoveMotorcycle(path));
+                        displayAllMotorcycles(motorcycleList);
                     }
                     else
                     {
@@ -54,7 +56,7 @@ public class OrlandoHarleyDMS
                 case 3: // Update values
                     if(!motorcycleList.isEmpty())
                     {
-                       UpdateValues uV = new UpdateValues(path);
+                        UpdateValues uV = new UpdateValues(path);
                         motorcycleList.clear();
                         motorcycleList.add(uV);
                     }
@@ -67,7 +69,6 @@ public class OrlandoHarleyDMS
 
                 case 4: // Availability status log
                     displayAllMotorcycles(motorcycleList);
-
                     break;
 
                 case 5:  // Exit System

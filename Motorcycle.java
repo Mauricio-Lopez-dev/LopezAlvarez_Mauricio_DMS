@@ -122,6 +122,7 @@ public class Motorcycle
         String tempFile = "text.txt";
         File oldFile = new File(path.toFile().getAbsolutePath());
         File newFile = new File(tempFile);
+        data = new ArrayList<>();
 
         try
         {
@@ -138,6 +139,7 @@ public class Motorcycle
                 if(id != line)
                 {
                     pw.println(currentLine);
+                    data.add(currentLine);
                 }
             }
 
@@ -150,6 +152,7 @@ public class Motorcycle
             File dump = new File(path.toFile().getName());
             newFile.renameTo(dump);
             System.out.println("***Motorcycle removed***");
+            addObjects(data);
         }
         catch(IOException e)
         {
@@ -172,6 +175,7 @@ public class Motorcycle
         String tempFile = "text.txt";
         File oldFile = new File(path.toFile().getAbsolutePath());
         File newFile = new File(tempFile);
+        data = new ArrayList<>();
 
         try
         {
@@ -188,6 +192,8 @@ public class Motorcycle
                 if(id != line && (!currentLine.contains(Integer.toString(year))))
                 {
                     pw.println(currentLine);
+                    data.add(currentLine);
+
                 }
             }
 
@@ -201,6 +207,8 @@ public class Motorcycle
             File dump = new File(path.toFile().getName());
             newFile.renameTo(dump);
             System.out.println("***Motorcycle removed***");
+            addObjects(data);
+
         }
         catch(IOException e)
         {
