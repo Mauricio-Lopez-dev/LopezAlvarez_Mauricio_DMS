@@ -71,6 +71,30 @@ public class Motorcycle
     } // end locatePath method
 
     /*
+     * Method name: writeToFile()
+     * Purpose:...File will be truncated to 0 and write new data to the file to reflect any changes that occurred
+     * Arguments: Path path, ArrayList<String> list
+     * Return value: None; no return value for this method
+     */
+    public void writeToFile(Path path, ArrayList<String> list)
+    {
+
+        try(BufferedWriter bw = Files.newBufferedWriter(path,StandardOpenOption.WRITE,
+                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                PrintWriter pw = new PrintWriter(new BufferedWriter(bw)))
+        {
+            for(int i = 0; i < list.size(); i++)
+            {
+                pw.write(list.get(i));
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    } // end writeToFle method
+
+    /*
      * Method name: toString()
      * Purpose:...This method will store all the current information from the variable data. Also, will
      *            display all current content from the file.
@@ -280,14 +304,24 @@ public class Motorcycle
                             }
                         }
                     }
+
                     currentList.add(builder.toString());
                     addObjects(currentList);
+                    writeToFile(path, currentList);
                     System.out.println("***Motorcycle values updated***");
+                }
+                else if(array[id - 1][colNumForStatus].equalsIgnoreCase("sold"))
+                {
+                    System.out.println("This is motorcycle is sold");
+                }
+                else if(array[id - 1][colNumForStatus].equalsIgnoreCase("pending"))
+                {
+                    System.out.println("Motorcycle is in pending status. Please contact buyer for an update.");
                 }
             }
             else
             {
-                System.out.println("Motorcycle is currently unavailable");
+                System.out.println("Buyer must contact financial department for further assistance.");
             }
         }
         catch(Exception e)
@@ -319,7 +353,6 @@ public class Motorcycle
         }
         return array;
     } // end buildArray method
-    // calculate method
 
     /*
      * Method name: calculateTotalPrice()

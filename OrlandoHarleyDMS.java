@@ -66,9 +66,8 @@ public class OrlandoHarleyDMS
                         System.out.println("Use option 1 to add motorcycles to the list");
                     }
                     break;
-
                 case 4: // Availability status log
-                    AvailabilityLog aL = new AvailabilityLog(path, motorcycleList);
+                    AvailabilityLog aL = new AvailabilityLog(path);
                     break;
 
                 case 5:  // Exit System
