@@ -112,7 +112,7 @@ public class UpdateValues extends Motorcycle
      * Arguments: Path path
      * Return value: None; no return value for this method
      */
-    public void updateValuesToObject(Path path)
+    public void updateValuesToObject(Path path) // FIX ME - If false, display message to user; do not let it go to updateObj method
     {
         boolean badInput;
         double currentSalesTax = 0.06;
@@ -132,7 +132,13 @@ public class UpdateValues extends Motorcycle
                 id = in.nextInt();
                 setId(path, id);
 
-                updateObj(path, getUserInput(), getId(), getSalesTax());
+                if(getUserInput().equalsIgnoreCase("true")) {
+                    updateObj(path, getUserInput(), getId(), getSalesTax());
+                }
+                else
+                {
+                    System.out.println("Buyer must contact financial department for further assistance.");
+                }
                 badInput = false;
             }
             catch(Exception e)

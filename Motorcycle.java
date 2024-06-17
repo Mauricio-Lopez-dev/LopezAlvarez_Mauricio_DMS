@@ -8,7 +8,6 @@
  *            to choose a feature in the software.
  */
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.*;
 
@@ -180,7 +179,7 @@ public class Motorcycle
         }
         catch(IOException e)
         {
-           e.printStackTrace();
+           System.out.println("Error: " + e.getMessage());
         }
     } // end removeObjects method
 
@@ -236,7 +235,7 @@ public class Motorcycle
         }
         catch(IOException e)
         {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     } // end removeObject method
 
@@ -250,8 +249,8 @@ public class Motorcycle
     public void updateObj(Path path, String userInput, int id, double salesTax)
     {
         ArrayList<String> currentList = new ArrayList<>();
-        double currentPrice = 0.0;
-        double totalPrice = 0.0;
+        double currentPrice;
+        double totalPrice;
         String status;
         String[] statusOptions = {"Pending", "Sold"};
         StringBuilder builder = new StringBuilder();
@@ -261,7 +260,7 @@ public class Motorcycle
             BufferedReader br = new BufferedReader(new FileReader(path.toFile()));
             String line = br.readLine();
 
-            while(line != null)
+            while (line != null)
             {
                 currentList.add(line);
                 line = br.readLine();
@@ -272,56 +271,45 @@ public class Motorcycle
             int colNumForPrice = 4;
             int colNumForStatus = 5;
 
-
-            if(userInput.equalsIgnoreCase("true"))
+            if (array[id - 1][colNumForStatus].equalsIgnoreCase("in stock"))
             {
-                if(array[id - 1][colNumForStatus].equalsIgnoreCase("in stock"))
-                {
-                    currentPrice = Integer.parseInt(array[id - 1][colNumForPrice]);
-                    System.out.println("MSRP: \t\t\t$" + currentPrice);
-                    totalPrice = calculateTotalPrice(salesTax, currentPrice);
-                    status = statusOptions[1];
+                currentPrice = Integer.parseInt(array[id - 1][colNumForPrice]);
+                System.out.println("MSRP: \t\t\t$" + currentPrice);
+                totalPrice = calculateTotalPrice(salesTax, currentPrice);
+                status = statusOptions[1];
 
-                    // Output
-                    System.out.println("FL Sales Tax: \t" + salesTax);
-                    System.out.println("Total price: \t$" + totalPrice);
-                    System.out.println("STATUS: \t" + status);
+                // Output
+                System.out.println("FL Sales Tax: \t" + salesTax);
+                System.out.println("Total price: \t$" + totalPrice);
+                System.out.println("STATUS: \t" + status);
 
-                    // Change values
-                    array[id - 1][colNumForPrice] = String.valueOf(totalPrice);
-                    array[id - 1][colNumForStatus] = String.valueOf(status);
+                // Change values
+                array[id - 1][colNumForPrice] = String.valueOf(totalPrice);
+                array[id - 1][colNumForStatus] = status;
 
-                    currentList.clear();
-                    for(int i = 0; i < array.length; i++)
-                    {
-                        for(int j = 0; j < 6; j++)
-                        {
-                            builder.append(array[i][j]).append(",");
-                            if(j == 5)
-                            {
-                                builder.append("\n");
-                                break;
-                            }
+                currentList.clear();
+                for (int i = 0; i < array.length; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        builder.append(array[i][j]).append(",");
+                        if (j == 5) {
+                            builder.append("\n");
+                            break;
                         }
                     }
+                }
 
-                    currentList.add(builder.toString());
-                    addObjects(currentList);
-                    writeToFile(path, currentList);
-                    System.out.println("***Motorcycle values updated***");
-                }
-                else if(array[id - 1][colNumForStatus].equalsIgnoreCase("sold"))
-                {
-                    System.out.println("This is motorcycle is sold");
-                }
-                else if(array[id - 1][colNumForStatus].equalsIgnoreCase("pending"))
-                {
-                    System.out.println("Motorcycle is in pending status. Please contact buyer for an update.");
-                }
+                currentList.add(builder.toString());
+                addObjects(currentList);
+                writeToFile(path, currentList);
+                System.out.println("***Motorcycle values updated***");
             }
-            else
+            else if (array[id - 1][colNumForStatus].equalsIgnoreCase("sold"))
             {
-                System.out.println("Buyer must contact financial department for further assistance.");
+                System.out.println("This motorcycle is sold");
+            }
+            else if (array[id - 1][colNumForStatus].equalsIgnoreCase("pending"))
+            {
+                System.out.println("Motorcycle is in pending status. Please contact buyer for an update.");
             }
         }
         catch(Exception e)
@@ -342,7 +330,7 @@ public class Motorcycle
         int cols =  list.get(0).split(",").length;
         String[][] array = new String[rows][cols];
 
-        // cols is added when it encounters "," ArrayList
+        // Value is added when encountering ','
         for(int i = 0; i < rows; i++)
         {
             String[] values = list.get(i).split(",");
