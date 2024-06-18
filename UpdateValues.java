@@ -133,7 +133,7 @@ public class UpdateValues extends Motorcycle
                 setId(path, id);
 
                 if(getUserInput().equalsIgnoreCase("true")) {
-                    updateObj(path, getUserInput(), getId(), getSalesTax());
+                    updateObj(path, getId(), getSalesTax());
                 }
                 else
                 {

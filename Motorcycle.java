@@ -77,7 +77,6 @@ public class Motorcycle
      */
     public void writeToFile(Path path, ArrayList<String> list)
     {
-
         try(BufferedWriter bw = Files.newBufferedWriter(path,StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 PrintWriter pw = new PrintWriter(new BufferedWriter(bw)))
@@ -231,7 +230,6 @@ public class Motorcycle
             newFile.renameTo(dump);
             System.out.println("***Motorcycle removed***");
             addObjects(data);
-
         }
         catch(IOException e)
         {
@@ -246,7 +244,7 @@ public class Motorcycle
      * Arguments: Path path, String userInput, int id, double salesTax
      * Return value: None; no return value for this method
      */
-    public void updateObj(Path path, String userInput, int id, double salesTax)
+    public void updateObj(Path path, int id, double salesTax)
     {
         ArrayList<String> currentList = new ArrayList<>();
         double currentPrice;

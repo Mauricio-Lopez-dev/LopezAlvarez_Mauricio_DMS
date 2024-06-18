@@ -6,12 +6,11 @@
  * Purpose:...Client requests a Database Management System(DMS) for Orlando Harley-Davidson. Features that will be
  *            implemented in the software are adding a file and store a list of motorcycles, remove a motorcycle,
  *            update values to a motorcycle, display availability status log, and exit option to safely
- *            shutdown the software. Upon running the software it will prompt the user to input the absolute path
+ *            shut down the software. Upon running the software it will prompt the user to input the absolute path
  *            to the file the user wants to load. User's choice will be handled through a switch statement.
  */
 import java.nio.file.Path;
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class OrlandoHarleyDMS
 {
@@ -21,7 +20,7 @@ public class OrlandoHarleyDMS
     public static void main(String[] args)
     {
         // Variables and Objects
-        int choice = 0;
+        int choice;
         ArrayList<Motorcycle> motorcycleList = new ArrayList<>();
         Motorcycle obj = new Motorcycle();
         Path path = obj.locateFile();
@@ -66,6 +65,7 @@ public class OrlandoHarleyDMS
                         System.out.println("Use option 1 to add motorcycles to the list");
                     }
                     break;
+
                 case 4: // Availability status log
                     AvailabilityLog aL = new AvailabilityLog(path);
                     break;
@@ -106,13 +106,13 @@ public class OrlandoHarleyDMS
     /*
      * Method name: getInput()
      * Purpose:...This method prompts the user to enter their choice of feature.
-     * Arguments: String option; the menu is displayed from the arguement String option.
+     * Arguments: String option; the menu is displayed from the argument String option.
      * Return value: The return value is the result from choice entered by the user of type int.
      */
     public static int getInput(String option)
     {
         int choice = 0;
-        boolean badInput = true;
+        boolean badInput;
 
         do
         {

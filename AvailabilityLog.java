@@ -17,6 +17,11 @@ public class AvailabilityLog extends Motorcycle
     private int userInput;
     Scanner in = new Scanner(System.in);
 
+    public AvailabilityLog()
+    {
+
+    } // end default constructor
+
     public AvailabilityLog(Path path)
     {
         displayStatusByFilter(path);
