@@ -31,9 +31,17 @@ public class OrlandoHarleyDMS
             switch(choice)
             {
                 case 1: // Add Motorcycle
-                    motorcycleList.add(new AddMotorcycle(path));
-                    displayAllMotorcycles(motorcycleList);
+                    if(motorcycleList.isEmpty()) {
+                        motorcycleList.add(new AddMotorcycle(path));
+                        displayAllMotorcycles(motorcycleList);
+                    }
+                    else {
+                        motorcycleList.clear();
+                        motorcycleList.add(new AddMotorcycle(path));
+                        displayAllMotorcycles(motorcycleList);
+                    }
                     break;
+
 
                 case 2: // Remove Motorcycle
                     if(!motorcycleList.isEmpty())

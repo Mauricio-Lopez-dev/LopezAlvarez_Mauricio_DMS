@@ -279,7 +279,7 @@ public class Motorcycle
                 // Output
                 System.out.println("FL Sales Tax: \t" + salesTax);
                 System.out.println("Total price: \t$" + totalPrice);
-                System.out.println("STATUS: \t" + status);
+                System.out.println("STATUS: \t\t"     + status);
 
                 // Change values
                 array[id - 1][colNumForPrice] = String.valueOf(totalPrice);

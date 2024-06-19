@@ -1,12 +1,18 @@
+/*
+ * Author: Mauricio Lopez Alvarez
+ * Date Written: June 19, 2024
+ * Course: CEN 3024C
+ * Class: Software Development I
+ * Purpose:..Test each functionality implement in the software.Verify that all the software generates accurate results
+ *           based on the requirements for the DMS.
+ */
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MotorcycleTest
@@ -26,20 +32,17 @@ class MotorcycleTest
         motorcycleObject = new Motorcycle();
         addMotorcycleObject = new AddMotorcycle(path);
 
-        for(int i = 0; i < addMotorcycleObject.getData().size(); i++)
+        for(int i = 1; i < addMotorcycleObject.getData().size(); i++)
         {
             testData.add(addMotorcycleObject.getData().get(i));
         }
     } // end setUp test method
 
+
     @Test
     @DisplayName("Add object to ArrayList test")
     void addObjects()
     {
-        testData = new ArrayList<>();
-
-        testData.add("Hello");
-        testData.add("World");
         motorcycleObject.addObjects(testData);
 
         assertEquals(testData, motorcycleObject.getData(), "Error: ArrayList data does not match");
@@ -49,7 +52,7 @@ class MotorcycleTest
     @DisplayName("Remove object option one test")
     void removeObject()
     {
-        int testID = 4;
+        int testID = 2;
         motorcycleObject.removeObject(path, testID);
 
         assertNotEquals(testData, motorcycleObject.getData(), "Error: Object was not removed");
@@ -59,7 +62,7 @@ class MotorcycleTest
     @DisplayName("Remove object option two test")
     void testRemoveObject()
     {
-        int testID = 7;
+        int testID = 30;
         int testYear = 2019;
         motorcycleObject.removeObject(path, testID, testYear);
 
@@ -72,7 +75,7 @@ class MotorcycleTest
     @DisplayName("Update object test")
     void updateObjTest()
     {
-        int testID = 5;
+        int testID = 1;
         double testSalesTax = 0.09;
 
         motorcycleObject.updateObj(path, testID, testSalesTax);
