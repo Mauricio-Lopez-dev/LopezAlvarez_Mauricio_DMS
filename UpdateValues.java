@@ -7,6 +7,7 @@
  *            prompt the user to input the motorcycle id. It will convert the ArrayList to a 2D array to access
  *            the attributes to update its values.
  */
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.file.Path;
@@ -19,6 +20,8 @@ public class UpdateValues extends Motorcycle
     private int id;
     private String userInput;
     Scanner in = new Scanner(System.in);
+
+    public UpdateValues() {} // end default constructor
 
     public UpdateValues(Path path)
     {
@@ -60,7 +63,6 @@ public class UpdateValues extends Motorcycle
                 System.out.println("Enter ID: ");
                 id = in.nextInt();
             }
-
         }
         catch (Exception e)
         {
@@ -68,6 +70,35 @@ public class UpdateValues extends Motorcycle
         }
         this.id = id;
     } // end mutator method
+
+    public void setIdWithGUI(Path path, int id)
+    {
+        int line = 0;
+        int min = 1;
+
+        try
+        {
+            BufferedReader br = new BufferedReader(new FileReader(path.toFile().getName()));
+            while (br.readLine() != null)
+            {
+                line++;
+            }
+            br.close();
+
+            while (id < min || id > line)
+            {
+                JOptionPane.showMessageDialog(null, "Invalid ID", "ID Not Found", JOptionPane.ERROR_MESSAGE);
+                id = Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Enter an existing motorcycle ID", "Locating ID", JOptionPane.PLAIN_MESSAGE));
+            }
+        }
+        catch (Exception e)
+        {
+           e.printStackTrace();
+        }
+        this.id = id;
+    } // end mutator method
+
 
     public String getUserInput()
     {
@@ -102,8 +133,14 @@ public class UpdateValues extends Motorcycle
             }
 
         }while(badInput);
+
         this.userInput = userInput;
     } // end mutator method
+
+    public void setUserInputWithGUI(String input)
+    {
+        this.userInput = input;
+    } // end setUserInputWithGUI method
 
     /*
      * Method name: updateValuesToObject()
@@ -112,11 +149,11 @@ public class UpdateValues extends Motorcycle
      * Arguments: Path path
      * Return value: None; no return value for this method
      */
-    public void updateValuesToObject(Path path) // FIX ME - If false, display message to user; do not let it go to updateObj method
+    public void updateValuesToObject(Path path)
     {
         boolean badInput;
-        double currentSalesTax = 0.06;
 
+        double currentSalesTax = 0.06;
         setSalesTax(currentSalesTax);
 
         do

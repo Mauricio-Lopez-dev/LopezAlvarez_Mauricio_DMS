@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainFrame">
+  <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="11" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="65" y="35" width="1023" height="556"/>
+    </constraints>
+    <properties>
+      <focusTraversalPolicyProvider value="true"/>
+      <foreground color="-5517830"/>
+      <minimumSize width="36" height="48"/>
+    </properties>
+    <border type="none" title="Welcome to Orlando Harley DMS" title-justification="2">
+      <font name="Fira Code"/>
+    </border>
+    <children>
+      <grid id="d0501" binding="FunctionalityPanel" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="11" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-5517830"/>
+          <enabled value="true"/>
+          <font name="Fira Code"/>
+          <foreground color="-329480"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="82393" class="javax.swing.JButton" binding="removeBtn">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-3356474"/>
+              <font name="Fira Code"/>
+              <hideActionText value="false"/>
+              <text value="Remove Motorcycle"/>
+            </properties>
+          </component>
+          <component id="df325" class="javax.swing.JButton" binding="updateBtn">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-3356474"/>
+              <enabled value="true"/>
+              <font name="Fira Code"/>
+              <text value="Update Values"/>
+            </properties>
+          </component>
+          <component id="95aed" class="javax.swing.JButton" binding="statusBtn">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-3356474"/>
+              <enabled value="true"/>
+              <font name="Fira Code"/>
+              <text value="Display Status Log"/>
+            </properties>
+          </component>
+          <component id="b5b11" class="javax.swing.JButton" binding="exitBtn">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-3356474"/>
+              <font name="Fira Code"/>
+              <text value="Exit System"/>
+            </properties>
+          </component>
+          <component id="6e62a" class="javax.swing.JButton" binding="uploadBtn">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-3356474"/>
+              <font name="Fira Code"/>
+              <text value="Upload File"/>
+            </properties>
+          </component>
+          <component id="46a24" class="javax.swing.JButton" binding="addBtn">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Fira Code"/>
+              <text value="Add Motorcycles"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <hspacer id="87a60">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="4" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <grid id="ef53a" binding="DisplayInfoPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="true" same-size-vertically="true" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-5517830"/>
+          <visible value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="9aa25" class="javax.swing.JTextPane" binding="descTextPane">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-1315334"/>
+            </properties>
+          </component>
+          <scrollpane id="a5e3e" binding="displayScrollPane">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1315334"/>
+              <focusTraversalPolicyProvider value="false"/>
+              <font name="Fira Code"/>
+              <foreground color="-5517830"/>
+              <horizontalScrollBarPolicy value="32"/>
+              <verticalScrollBarPolicy value="22"/>
+            </properties>
+            <border type="bevel-raised"/>
+            <children/>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="c09de" binding="OutputPane" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <visible value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="6762d" class="javax.swing.JTextPane" binding="outputTextPane">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties>
+              <visible value="false"/>
+            </properties>
+          </component>
+          <hspacer id="8743c">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <vspacer id="ce7bb">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

@@ -8,7 +8,6 @@
  *            method addObjects from Motorcycle class is called to store all data.
  */
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.*;
 
@@ -45,7 +44,6 @@ public class AddMotorcycle extends Motorcycle
         {
             System.out.println(e.getMessage());
         }
-
         addObjects(addMotorcycleList);
     } // end addMotorcycle method
 } // end AddMotorcycle class

@@ -7,6 +7,7 @@
  *            the class contains all functionality methods to execute based on the user's choice when prompted
  *            to choose a feature in the software.
  */
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -33,6 +34,17 @@ public class Motorcycle
         }
         this.path = path;
     } // end mutator method
+
+    public void setPathWithGUI(Path path)
+    {
+        while(!path.toFile().exists())
+        {
+            JOptionPane.showMessageDialog(null, "File does not exist", "Error", JOptionPane.ERROR_MESSAGE);
+            String temp = JOptionPane.showInputDialog(null,"Enter file path", "Locate File", JOptionPane.PLAIN_MESSAGE);
+            path = Paths.get(temp);
+        }
+        this.path = path;
+    } // end setPathWithGUI method
 
     public ArrayList<String> getData()
     {
@@ -65,8 +77,28 @@ public class Motorcycle
         {
             System.out.println(e.getMessage());
         }
-
         return getPath();
+    } // end locatePath method
+
+    /*
+     * Method name: locatePathWithGUI()
+     * Purpose:...Prompts the user to input absolute path to locate the file in their operating system.
+     * Arguments: Zero arguments
+     * Return value: No return value
+     */
+    public void locateFileWithGUI(String filePath)
+    {
+        try
+        {
+            path = Paths.get(filePath);
+            setPathWithGUI(path);
+            JOptionPane.showMessageDialog(null, "File successfully located", "Location Received", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     } // end locatePath method
 
     /*
@@ -164,7 +196,6 @@ public class Motorcycle
                     data.add(currentLine);
                 }
             }
-
             fr.close();
             bw.close();
             fw.close();
@@ -215,10 +246,8 @@ public class Motorcycle
                 {
                     pw.println(currentLine);
                     data.add(currentLine);
-
                 }
             }
-
             pw.close();
             fr.close();
             bw.close();
@@ -315,6 +344,95 @@ public class Motorcycle
             e.printStackTrace();
         }
     } // end updateObj method
+
+    /*
+     * Method name: updateObjWithGUI()
+     * Purpose:...Updates values to a motorcycle. Motorcycle's price and status are updated if the customer
+     *            can purchase the motorcycle. This method is utilized in the MainFrame to display GUI
+     * Arguments: Path path, String userInput, int id, double salesTax
+     * Return value: None; no return value for this method
+     */
+    public void updateObjWithGUI(Path path, int id, double salesTax)
+    {
+        ArrayList<String> currentList = new ArrayList<>();
+        double currentPrice;
+        double totalPrice;
+        String status;
+        String[] statusOptions = {"Pending", "Sold"};
+        StringBuilder builder = new StringBuilder();
+
+        try
+        {
+            BufferedReader br = new BufferedReader(new FileReader(path.toFile()));
+            String line = br.readLine();
+
+            while (line != null)
+            {
+                currentList.add(line);
+                line = br.readLine();
+            }
+            br.close();
+
+            String[][] array = buildArray(currentList);
+            int colNumForPrice = 4;
+            int colNumForStatus = 5;
+
+            if (array[id - 1][colNumForStatus].equalsIgnoreCase("in stock"))
+            {
+                currentPrice = Integer.parseInt(array[id - 1][colNumForPrice]);
+
+                totalPrice = calculateTotalPrice(salesTax, currentPrice);
+                status = statusOptions[1];
+
+                JOptionPane.showMessageDialog(null,
+                        "<html>Motorcycle is in stock" +
+                                "<br><B>Current Price: </B></br>$" + currentPrice +
+                                "<br><B>Sales tax: </B></br>" + salesTax +
+                                "<br><B>Total Price: </B></br>$" + totalPrice +
+                                "<br><B>Status: </B></br>" + status + "</html>",
+                            "Current Sale Amount", JOptionPane.INFORMATION_MESSAGE);
+
+                // Change values
+                array[id - 1][colNumForPrice] = String.valueOf(totalPrice);
+                array[id - 1][colNumForStatus] = status;
+
+                currentList.clear();
+                for (int i = 0; i < array.length; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        builder.append(array[i][j]).append(",");
+                        if (j == 5) {
+                            builder.append("\n");
+                            break;
+                        }
+                    }
+                }
+                currentList.add(builder.toString());
+                addObjects(currentList);
+                writeToFile(path, currentList);
+                JOptionPane.showMessageDialog(null, "Motorcycle updated",
+                        "Updated Values", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (array[id - 1][colNumForStatus].equalsIgnoreCase("sold"))
+            {
+                JOptionPane.showMessageDialog(null, "Motorcycle is not longer available",
+                                        "Sold Status", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (array[id - 1][colNumForStatus].equalsIgnoreCase("pending"))
+            {
+                JOptionPane.showMessageDialog(null,"Motorcycle is in pending status. Please contact buyer for an update.",
+                        "Pending Status", JOptionPane.INFORMATION_MESSAGE );
+            }
+            else if(array[id - 1][colNumForStatus].equalsIgnoreCase("out of stock"))
+            {
+                JOptionPane.showMessageDialog(null,"Motorcycle is currently out of stock",
+                        "Out of Stock Status", JOptionPane.INFORMATION_MESSAGE );
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    } // end updateObjWithGUI Method
 
     /*
      * Method name: buildArray()

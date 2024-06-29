@@ -7,6 +7,7 @@
  *            a choice of how to locate the motorcycle. Option selected by the user will search the motorcycle
  *            with its corresponding attributes.
  */
+import javax.swing.*;
 import java.time.Year;
 import java.util.*;
 import java.nio.file.*;
@@ -18,6 +19,8 @@ public class RemoveMotorcycle extends Motorcycle
     private int choice;
     private int year;
     private int motorcycleID;
+
+    public RemoveMotorcycle() {} // end default constructor
 
     public RemoveMotorcycle(Path path)
     {
@@ -44,6 +47,24 @@ public class RemoveMotorcycle extends Motorcycle
         this.choice = choice;
     } // end mutator method
 
+    public void setChoiceWithGUI(int choice)
+    {
+        int min = 1;
+        int max = 2;
+
+        while (choice < min || choice > max)
+        {
+            JOptionPane.showMessageDialog(null, "Invalid option", "Error", JOptionPane.WARNING_MESSAGE);
+            choice = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "<html>To search a motorcycle to remove choose one of the following: " +
+                            "<br><B>1. Search by ID</B></br>" +
+                            "<br><B>2. Search by ID and Year</B></br></html>",
+                    "Year of Motorcycle", JOptionPane.INFORMATION_MESSAGE));
+
+        } // end while loop
+
+        this.choice = choice;
+    } // end setChoiceWIthGUI method
     public int getYear()
     {
         return year;
@@ -51,15 +72,35 @@ public class RemoveMotorcycle extends Motorcycle
 
     public void setYear(int year)
     {
-        int maxYear = 1990;
-        while(year > Year.now().getValue() || year < maxYear)
+        int minYearAccepted= 1990;
+        int currentYear = Year.now().getValue();
+
+        while(year < minYearAccepted || year > currentYear)
         {
+
             System.out.println("Error: Invalid option");
             System.out.println("Enter numeric model number: ");
             year = in.nextInt();
         }
         this.year = year;
     } // end mutator method
+
+    public void setYearWithGUI(int year)
+    {
+        int minYearAccepted= 1990;
+        int currentYear = Year.now().getValue();
+
+        while(year < minYearAccepted || year > currentYear)
+        {
+            JOptionPane.showMessageDialog(null, "Invalid option", "Error", JOptionPane.WARNING_MESSAGE);
+
+            year = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "<html>Please enter a year within the following range:" +
+                    "<br><B>Year Accepted:</B></br> " + minYearAccepted + " - " + currentYear + "</html>",
+                    "Error", JOptionPane.WARNING_MESSAGE));
+        }
+        this.year = year;
+    } // end setYearWithGUI method
 
     public int getMotorcycleID()
     {
@@ -68,7 +109,9 @@ public class RemoveMotorcycle extends Motorcycle
 
     public void setMotorcycleID(int motorcycleID)
     {
-        while (motorcycleID < 1 || motorcycleID > 30)
+        int min = 1;
+        int max = 30;
+        while (motorcycleID < min || motorcycleID > max)
         {
             System.out.println("Error: Invalid option");
             System.out.print("Enter motorcycle ID: ");
@@ -76,6 +119,19 @@ public class RemoveMotorcycle extends Motorcycle
         }
         this.motorcycleID = motorcycleID;
     } // end mutator method
+
+    public void setMotorcycleIDWithID(int motorcycleID)
+    {
+        int min = 1;
+        int max = 30;
+        while (motorcycleID < min || motorcycleID > max)
+        {
+            JOptionPane.showMessageDialog(null, "Invalid option", "Error", JOptionPane.WARNING_MESSAGE);
+            motorcycleID = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "Enter existing ID" , "Motorcycle ID", JOptionPane.PLAIN_MESSAGE));
+        }
+        this.motorcycleID = motorcycleID;
+    } // end setMotorcycleIDWithGUI method method
 
     /*
      * Method name: removeOption()

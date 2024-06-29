@@ -42,7 +42,6 @@ public class OrlandoHarleyDMS
                     }
                     break;
 
-
                 case 2: // Remove Motorcycle
                     if(!motorcycleList.isEmpty())
                     {
@@ -164,4 +163,4 @@ public class OrlandoHarleyDMS
            displayMessage(motorcycle.toString());
         }
     } // end displayAllMotorcycles method
-} // end OrlandoHarleyDMS
+} // end OrlandoHarleyDMS class
