@@ -1,3 +1,11 @@
+/*
+ * Author: Mauricio Lopez Alvarez
+ * Date Written: July 1, 2024
+ * Course: CEN 3024C
+ * Class: Software Development I
+ * Purpose:...The software and its features are implemented in a GUI frame. This class handles all the functionalities
+ *             of the software to include exceptional handling.
+ */
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +32,12 @@ public class MainFrame extends JFrame
     UpdateValues updateObj;
     AvailabilityLog statusObj;
 
+    /*
+     * Method name: MainFrame()
+     * Purpose:...Constructor builds the GUI for the DMS software.
+     * Arguments: Zero arguments for this method.
+     * Return value: None
+     */
     public MainFrame()
     {
         // Setting frame
@@ -243,6 +257,13 @@ public class MainFrame extends JFrame
         }); // end exitBtn action listener
     } // end MainFrame constructor
 
+    /*
+     * Method name: main()
+     * Purpose:...Main method's purpose is to call the MainFrame constructor that allows the user to interact
+     *            with a GUI frame.
+     * Arguments: Zero arguments for this method.
+     * Return value: None
+     */
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(MainFrame::new);
