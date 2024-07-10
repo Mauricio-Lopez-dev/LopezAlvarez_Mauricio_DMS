@@ -222,7 +222,7 @@ public class AvailabilityLog extends Motorcycle
      * Arguments: Path path, int userInput
      * Return value: Returns data of type StringBuilder
      */
-    public StringBuilder displayStatusWithGUI(Path path, int userInput)
+    public StringBuilder displayStatusWithGUI(Path path, int input)
     {
         ArrayList<String> currentList = new ArrayList<>();
         int colsNumOfStatus = 5;
@@ -249,7 +249,7 @@ public class AvailabilityLog extends Motorcycle
 
         String[][] array = buildArray(currentList);
 
-        switch(userInput)
+        switch(input)
         {
             case 1: // Display In Stock
                 for(int i = 0; i < array.length; i++)
@@ -324,5 +324,35 @@ public class AvailabilityLog extends Motorcycle
                 break;
         } // end switch
         return builder;
+    } // end displayStatusWithGUI method
+
+    /*
+     * Method name: displayStatusWithGUI()
+     * Purpose:...Process filter from user input and displays the list to the user
+     * Arguments: Path path, int userInput
+     * Return value: Returns data of type StringBuilder
+     */
+    public String getQuery(int input)
+    {
+        String query = "";
+        switch(input)
+        {
+            case 1: // Display In Stock
+                query = "select * from motorcycle_data where Status = 'In Stock'";
+                break;
+
+            case 2: // Display Out of Stock
+                query = "select * from motorcycle_data where Status = 'Out Of Stock'";
+                break;
+
+            case 3: // Display Pending
+                query = "select * from motorcycle_data where Status = 'Pending'";
+                break;
+
+            case 4: // Display Sold
+                query = "select * from motorcycle_data where Status = 'Sold'";
+                break;
+        } // end switch
+        return query;
     } // end displayStatusWithGUI method
 } // end AvailabilityLog class

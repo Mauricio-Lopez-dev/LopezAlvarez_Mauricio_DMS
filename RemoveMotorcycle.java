@@ -8,6 +8,9 @@
  *            with its corresponding attributes.
  */
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Year;
 import java.util.*;
 import java.nio.file.*;
@@ -60,9 +63,7 @@ public class RemoveMotorcycle extends Motorcycle
                             "<br><B>1. Search by ID</B></br>" +
                             "<br><B>2. Search by ID and Year</B></br></html>",
                     "Year of Motorcycle", JOptionPane.INFORMATION_MESSAGE));
-
         } // end while loop
-
         this.choice = choice;
     } // end setChoiceWIthGUI method
     public int getYear()
@@ -189,4 +190,30 @@ public class RemoveMotorcycle extends Motorcycle
             }
         }while (badInput);
     } // end removeMotorcycle method
+
+    public String getQueryOption( int id)
+    {
+        String query = "delete from motorcycle_data where ID = " + id;
+
+        return query;
+    } // end getQueryOption method
+
+    public String getQueryOption( int id, int year)
+    {
+        String query = "delete from motorcycle_data where ID = " + id + " AND year = " + year;
+
+        return query;
+    } // end getQueryOption overloaded method
+
+    public void removeRow(String query, Connection con)
+    {
+        try{
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate(query);
+        }
+        catch(SQLException error)
+        {
+            error.printStackTrace();
+        }
+    } // end removeRow method
 } // end RemoveMotorcycle class

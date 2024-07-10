@@ -11,6 +11,10 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class UpdateValues extends Motorcycle
@@ -68,6 +72,21 @@ public class UpdateValues extends Motorcycle
         {
             e.printStackTrace();
         }
+        this.id = id;
+    } // end mutator method
+
+    public void setIdWithGUI(int id)
+    {
+        int min = 1;
+        int max = 30;
+
+        while (id < min || id > max)
+        {
+            JOptionPane.showMessageDialog(null, "Invalid ID", "ID Not Found", JOptionPane.ERROR_MESSAGE);
+            id = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "Enter an existing motorcycle ID", "Locating ID", JOptionPane.PLAIN_MESSAGE));
+        }
+
         this.id = id;
     } // end mutator method
 
@@ -186,4 +205,73 @@ public class UpdateValues extends Motorcycle
             }
         }while(badInput);
     } // end updateValuesToObject method
+
+
+    public double getPriceQuery(Connection con, int id)
+    {
+        double price = 0.0;
+        try{
+            Statement stmt = con.createStatement();
+            String query = "select Price from motorcycle_data where ID = " + id;
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next())
+            {
+                price += rs.getDouble("Price");
+            }
+            JOptionPane.showMessageDialog(null, "Price captured: " + price,
+                    "Price Query", JOptionPane.PLAIN_MESSAGE);
+        }
+        catch(SQLException error)
+        {
+           error.printStackTrace();
+        }
+        return price;
+    }
+
+    public String getQuery(int id, double total, String status)
+    {
+        String query = "UPDATE motorcycle_data ";
+                query += "SET Price = " + total + ", Status = '" + status + "'";
+                query += "where ID = " + id + ";";
+
+        return query;
+    } // end getQuery method
+
+    public void updateValues(int id, double price, Connection con)
+    {
+        String status = "";
+        String priceQuery = "select Status from motorcycle_data where ID = " + id;
+
+        try{
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
+            ResultSet rs = stmt1.executeQuery(priceQuery);
+
+            while(rs.next())
+            {
+                status = rs.getString("Status");
+            }
+
+            if (status.equalsIgnoreCase("in stock"))
+            {
+                status = "Sold";
+
+                String query = getQuery(id, price, status);
+                stmt2.executeUpdate(query);
+            }
+            else if(status.equalsIgnoreCase("out of stock"))
+            {
+                JOptionPane.showMessageDialog(null, "Motorcycle is currently out of stock",
+                                    "Not Available", JOptionPane.WARNING_MESSAGE);
+            }
+            else if(status.equalsIgnoreCase("sold"))
+            {
+                JOptionPane.showMessageDialog(null, "Motorcycle is sold",
+                        "Not Available", JOptionPane.WARNING_MESSAGE);
+            }
+        }catch(SQLException e)
+        {
+           e.printStackTrace();
+        }
+    } // end updateValues method
 } // end UpdateValues class

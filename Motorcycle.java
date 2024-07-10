@@ -10,6 +10,9 @@
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class Motorcycle
@@ -475,4 +478,5 @@ public class Motorcycle
 
         return result;
     } // end calculateTotalPrice method
+
  } // end Motorcycle class

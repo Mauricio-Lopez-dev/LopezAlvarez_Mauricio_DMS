@@ -6,9 +6,12 @@
  * Purpose:...The software and its features are implemented in a GUI frame. This class handles all the functionalities
  *             of the software to include exceptional handling.
  */
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame
@@ -27,6 +30,7 @@ public class MainFrame extends JFrame
     private JTextPane outputTextPane;
     private JScrollPane displayScrollPane;
     private JPanel OutputPane;
+    private JTable table1;
     Motorcycle motorObj;
     RemoveMotorcycle removeObj;
     UpdateValues updateObj;
@@ -253,6 +257,7 @@ public class MainFrame extends JFrame
                 JOptionPane.showMessageDialog(MainFrame.this, "Thank you for using Orlando Harley DMS",
                         "Exiting Application", JOptionPane.INFORMATION_MESSAGE);
                 System.exit(0);
+
             }
         }); // end exitBtn action listener
     } // end MainFrame constructor
@@ -267,5 +272,6 @@ public class MainFrame extends JFrame
     public static void main(String[] args)
     {
         SwingUtilities.invokeLater(MainFrame::new);
+
     } // end main
 } // end MainFrame class
