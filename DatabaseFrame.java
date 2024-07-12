@@ -54,7 +54,6 @@ public class DatabaseFrame extends JFrame
         setVisible(true);
 
         // Variables and Objects
-        ArrayList<Motorcycle> motorcycleList = new ArrayList<>();
         double currentSalesTax = 0.06;
         motorObj = new Motorcycle();
         removeObj = new RemoveMotorcycle();
@@ -63,6 +62,7 @@ public class DatabaseFrame extends JFrame
         String url = "jdbc:mysql://localhost:3306/Motorcycles";
         String username;
         String password;
+        boolean badInput = false;
 
         // Welcoming message
         descTextPane.setText(
@@ -74,61 +74,70 @@ public class DatabaseFrame extends JFrame
                         "Along with inputting the username and password to gain access to the database. " +
                         "If any information provided is incorrect. A message will display to the user.");
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            username = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter username",
-                                            "Database", JOptionPane.PLAIN_MESSAGE);
-            password = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter password",
-                                            "Database", JOptionPane.PLAIN_MESSAGE);
+        do {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection con = DriverManager.getConnection(url, username, password);
-            JOptionPane.showMessageDialog(DatabaseFrame.this, "Established connection",
-                                            "Successful", JOptionPane.INFORMATION_MESSAGE);
+                do {
+                    username = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter username",
+                            "Database", JOptionPane.PLAIN_MESSAGE);
+                    password = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter password",
+                            "Database", JOptionPane.PLAIN_MESSAGE);
 
-            // Print data button
-            printDataBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    try {
-                        Statement st = con.createStatement();
-                        String query = "select * from motorcycle_data";
-                        ResultSet rs = st.executeQuery(query);
-                        ResultSetMetaData rsmd = rs.getMetaData();
-                        DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                        int cols = rsmd.getColumnCount();
-                        String[] colName = new String[cols];
-
-                        for (int i = 0; i < cols; i++) {
-                            colName[i] = rsmd.getColumnName(i + 1);
-                        }
-                        model.setColumnIdentifiers(colName);
-
-                        String id, year, make, modelDB, price, status;
-                        while (rs.next()) {
-                            id = rs.getString(1);
-                            year = rs.getString(2);
-                            make = rs.getString(3);
-                            modelDB = rs.getString(4);
-                            price = rs.getString(5);
-                            status = rs.getString(6);
-                            String[] row = {id, year, make, modelDB, price, status};
-                            model.addRow(row);
-                        }
-                        st.close();
+                    // Validation
+                    if (!username.isEmpty() && !password.isEmpty()) {
+                        badInput = false;
+                    } else {
+                        badInput = true;
+                        JOptionPane.showMessageDialog(DatabaseFrame.this, "Error: Username and password fields cannot be empty.",
+                                "Error Found", JOptionPane.ERROR_MESSAGE);
                     }
-                    catch(SQLException ex)
-                    {
-                        ex.printStackTrace();
+                } while (badInput);
+
+                Connection con = DriverManager.getConnection(url, username, password);
+                JOptionPane.showMessageDialog(DatabaseFrame.this, "Established connection",
+                        "Successful", JOptionPane.INFORMATION_MESSAGE);
+
+                // Print data button
+                printDataBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            Statement st = con.createStatement();
+                            String query = "select * from motorcycle_data";
+                            ResultSet rs = st.executeQuery(query);
+                            ResultSetMetaData rsmd = rs.getMetaData();
+                            DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                            int cols = rsmd.getColumnCount();
+                            String[] colName = new String[cols];
+
+                            for (int i = 0; i < cols; i++) {
+                                colName[i] = rsmd.getColumnName(i + 1);
+                            }
+                            model.setColumnIdentifiers(colName);
+
+                            String id, year, make, modelDB, price, status;
+                            while (rs.next()) {
+                                id = rs.getString(1);
+                                year = rs.getString(2);
+                                make = rs.getString(3);
+                                modelDB = rs.getString(4);
+                                price = rs.getString(5);
+                                status = rs.getString(6);
+                                String[] row = {id, year, make, modelDB, price, status};
+                                model.addRow(row);
+                            }
+                            st.close();
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                }
-            }); // end printDataBtn action listener
+                }); // end printDataBtn action listener
 
-            // Remove Button
-            removeBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
+                // Remove Button
+                removeBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
                         descTextPane.setText("Remove Motorcycle function will prompt the user to supply at least one attribute" +
                                 " that is associated to the motorcycle that will be removed. The motorcycle can" +
                                 " be searched by its ID or ID and Year. Once the motorcycle is found it will be" +
@@ -145,16 +154,15 @@ public class DatabaseFrame extends JFrame
                                     "Motorcycle ID", JOptionPane.PLAIN_MESSAGE)));
 
                             if (removeObj.getChoice() == 1) {
-                              String query =  removeObj.getQueryOption(removeObj.getMotorcycleID());
-                             removeObj.removeRow(query, con);
+                                String query = removeObj.getQueryOption(removeObj.getMotorcycleID());
+                                removeObj.removeRow(query, con);
 
-                            }
-                            else if (removeObj.getChoice() == 2) {
+                            } else if (removeObj.getChoice() == 2) {
                                 removeObj.setYearWithGUI(Integer.parseInt(JOptionPane.showInputDialog(DatabaseFrame.this,
                                         "Enter the year",
                                         "Year of Motorcycle", JOptionPane.PLAIN_MESSAGE)));
 
-                                String query =  removeObj.getQueryOption(removeObj.getMotorcycleID(), removeObj.getYear());
+                                String query = removeObj.getQueryOption(removeObj.getMotorcycleID(), removeObj.getYear());
                                 removeObj.removeRow(query, con);
                             }
 
@@ -167,35 +175,30 @@ public class DatabaseFrame extends JFrame
                             JOptionPane.showMessageDialog(DatabaseFrame.this, "Returning to main menu",
                                     "Caution", JOptionPane.WARNING_MESSAGE);
                         }
-                }
-            }); // end removeBtn action listener
+                    }
+                }); // end removeBtn action listener
 
-            // Update Button
-            updateBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    descTextPane.setText(
-                            "Update Values function will ask the user if the customer can purchase the " +
-                                    "motorcycle today? If yes is selected it will prompt the user to input the motorcycle ID to " +
-                                    "verify it's status. Otherwise, it will prompt the user to direct the customer to financial " +
-                                    "department for further assistance.");
+                // Update Button
+                updateBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        descTextPane.setText(
+                                "Update Values function will ask the user if the customer can purchase the " +
+                                        "motorcycle today? If yes is selected it will prompt the user to input the motorcycle ID to " +
+                                        "verify it's status. Otherwise, it will prompt the user to direct the customer to financial " +
+                                        "department for further assistance.");
 
-                        String option = "true";
                         int result = JOptionPane.showConfirmDialog(DatabaseFrame.this,
                                 "Before updating any values, can the customer purchase the motorcycle today?",
                                 "Message", JOptionPane.YES_NO_OPTION);
-
                         try {
                             if (result == JOptionPane.YES_OPTION) {
-
                                 updateObj.setIdWithGUI(Integer.parseInt(JOptionPane.showInputDialog(DatabaseFrame.this,
-                                                "Enter the motorcycle ID")));
+                                        "Enter the motorcycle ID")));
 
                                 updateObj.setSalesTax(currentSalesTax);
-                               // motorObj.updateObjWithGUI(motorObj.getPath(), updateObj.getId(), updateObj.getSalesTax());
-
-                               double total = motorObj.calculateTotalPrice(updateObj.getSalesTax(), updateObj.getPriceQuery(con, updateObj.getId()));
-                               updateObj.updateValues(updateObj.getId(), total, con);
+                                double total = motorObj.calculateTotalPrice(updateObj.getSalesTax(), updateObj.getPriceQuery(con, updateObj.getId()));
+                                updateObj.updateValues(updateObj.getId(), total, con);
 
                             } else if (result == JOptionPane.NO_OPTION) {
                                 JOptionPane.showMessageDialog(DatabaseFrame.this,
@@ -208,18 +211,16 @@ public class DatabaseFrame extends JFrame
                             JOptionPane.showMessageDialog(DatabaseFrame.this, "Returning to main menu",
                                     "Caution", JOptionPane.WARNING_MESSAGE);
                         }
+                    }
+                }); // end updateBtn action listener
 
-                }
-            }); // end updateBtn action listener
-
-            // Status Button
-            statusBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    descTextPane.setText(
-                            "Display Status Log function will prompt the user to select an option " +
-                                    "of motorcycles to display based on their status.");
+                // Status Button
+                statusBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        descTextPane.setText(
+                                "Display Status Log function will prompt the user to select an option " +
+                                        "of motorcycles to display based on their status.");
                         try {
                             statusObj.setUserInputWithGUI(Integer.parseInt(JOptionPane.showInputDialog(DatabaseFrame.this,
                                     "<html>Display availability status log by filter.<br>Choose one of the following:</br>" +
@@ -259,39 +260,39 @@ public class DatabaseFrame extends JFrame
                             JOptionPane.showMessageDialog(DatabaseFrame.this, "Returning to main menu",
                                     "Caution", JOptionPane.WARNING_MESSAGE);
                         }
-                }
-            }); // end statusBtn action listener
+                    }
+                }); // end statusBtn action listener
 
-            // Reset Panel Button
-            resetBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    table1.setModel(new DefaultTableModel());
-                }
-            }); // end resetBtn action listener
+                // Reset Panel Button
+                resetBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        table1.setModel(new DefaultTableModel());
+                    }
+                }); // end resetBtn action listener
 
-            // Exit Button
-            exitBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JOptionPane.showMessageDialog(DatabaseFrame.this, "Thank you for using Orlando Harley DMS",
-                            "Exiting Application", JOptionPane.INFORMATION_MESSAGE);
+                // Exit Button
+                exitBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(DatabaseFrame.this, "Thank you for using Orlando Harley DMS",
+                                "Exiting Application", JOptionPane.INFORMATION_MESSAGE);
+                        System.exit(0);
+                    }
+                }); // end exitBtn action listener
 
-                    System.exit(0);
-                }
-            }); // end exitBtn action listener
-
-        }catch(ClassNotFoundException e)
-        {
-            JOptionPane.showMessageDialog(DatabaseFrame.this, "Error: Class Not Found",
-                    "Driver", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(SQLException error)
-        {
-            JOptionPane.showMessageDialog(DatabaseFrame.this, "Error: Database not Found",
-                    "Database Does not exist", JOptionPane.ERROR_MESSAGE);
-        }
-    } // end MainFrame constructor
+                badInput = false;
+            } catch (ClassNotFoundException e) {
+                JOptionPane.showMessageDialog(DatabaseFrame.this, "Error: Class Not Found",
+                        "Driver", JOptionPane.ERROR_MESSAGE);
+                badInput = true;
+            } catch (SQLException error) {
+                JOptionPane.showMessageDialog(DatabaseFrame.this, "Error: Database not Found",
+                        "Database Does not exist", JOptionPane.ERROR_MESSAGE);
+                badInput = true;
+            }
+        }while(badInput);
+    } // end DatabaseFrame constructor
 
     /*
      * Method name: main()
