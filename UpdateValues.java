@@ -206,7 +206,6 @@ public class UpdateValues extends Motorcycle
         }while(badInput);
     } // end updateValuesToObject method
 
-
     public double getPriceQuery(Connection con, int id)
     {
         double price = 0.0;
@@ -228,6 +227,12 @@ public class UpdateValues extends Motorcycle
         return price;
     }
 
+    /*
+     * Method name: getQuery()
+     * Purpose:...Returns a query to execute the functionality
+     * Arguments: int id, double total, String status
+     * Return value: Stirng query
+     */
     public String getQuery(int id, double total, String status)
     {
         String query = "UPDATE motorcycle_data ";
@@ -237,6 +242,12 @@ public class UpdateValues extends Motorcycle
         return query;
     } // end getQuery method
 
+    /*
+     * Method name: updateValues()
+     * Purpose:...Updates values of the motorcycle in the database
+     * Arguments: int id, double price, Connection con
+     * Return value: None
+     */
     public void updateValues(int id, double price, Connection con)
     {
         String status = "";

@@ -23,7 +23,7 @@ public class AddMotorcycle extends Motorcycle
      * Purpose:...Once path is supplied by the user it will read each line and store into a variable. Once completed
      *            the method called addObjects() to store all lines to an ArrayList.
      * Arguments: Path path
-     * Return value: None; no return value for this method
+     * Return value
      */
     public void addMotorcycles(Path path)
     {

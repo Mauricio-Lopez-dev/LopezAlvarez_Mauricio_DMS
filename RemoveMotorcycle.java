@@ -191,6 +191,12 @@ public class RemoveMotorcycle extends Motorcycle
         }while (badInput);
     } // end removeMotorcycle method
 
+    /*
+     * Method name: getQueryOption()
+     * Purpose:...Return a query to execute the functionality
+     * Arguments: int id
+     * Return value: Stirng query
+     */
     public String getQueryOption( int id)
     {
         String query = "delete from motorcycle_data where ID = " + id;
@@ -198,6 +204,13 @@ public class RemoveMotorcycle extends Motorcycle
         return query;
     } // end getQueryOption method
 
+    /*
+     * Method name: getQueryOption()
+     * Purpose:...Overloaded method returns a query where user
+     *            chose option two to remove a motorcycle from the database
+     * Arguments: int id, int year
+     * Return value: Stirng query
+     */
     public String getQueryOption( int id, int year)
     {
         String query = "delete from motorcycle_data where ID = " + id + " AND year = " + year;
@@ -205,6 +218,12 @@ public class RemoveMotorcycle extends Motorcycle
         return query;
     } // end getQueryOption overloaded method
 
+    /*
+     * Method name: removeRow()
+     * Purpose:...Removes the motorcycle from the database
+     * Arguments: String query, Connection con
+     * Return value: None
+     */
     public void removeRow(String query, Connection con)
     {
         try{

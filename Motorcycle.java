@@ -146,10 +146,10 @@ public class Motorcycle
     } // end toString method
 
     /*
-     * Method name: addObject()
+     * Method name: addObjects()
      * Purpose:...This method will add all data from file and store it to an ArrayList<String>
      * Arguments: ArrayList<String> list
-     * Return value: None; no return value for this method
+     * Return value: None
      */
     public void addObjects(ArrayList<String> list)
     {
@@ -221,7 +221,7 @@ public class Motorcycle
      * Purpose:...File will be read and locate the motorcycle by its ID and year. Once found, it is then removed from
      *            the system.
      * Arguments: Path path, int id, int year
-     * Return value: None; no return value for this method
+     * Return value: None
      */
     public void removeObject(Path path, int id, int year)
     {

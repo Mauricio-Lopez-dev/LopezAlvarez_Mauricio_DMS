@@ -104,7 +104,7 @@ public class AvailabilityLog extends Motorcycle
      * Method name: displayStatus()
      * Purpose:...Process filter from user input and displays the list to the user
      * Arguments: Path path, int userInput
-     * Return value: None; no return value for this method
+     * Return value: None
      */
    public void displayStatus(Path path, int userInput)
    {
@@ -327,10 +327,10 @@ public class AvailabilityLog extends Motorcycle
     } // end displayStatusWithGUI method
 
     /*
-     * Method name: displayStatusWithGUI()
-     * Purpose:...Process filter from user input and displays the list to the user
-     * Arguments: Path path, int userInput
-     * Return value: Returns data of type StringBuilder
+     * Method name: getQuery()
+     * Purpose:...Captures and returns the query from an input supplied by the user
+     * Arguments: int input
+     * Return value: String query
      */
     public String getQuery(int input)
     {
