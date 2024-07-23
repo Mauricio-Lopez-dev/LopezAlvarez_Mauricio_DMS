@@ -59,7 +59,7 @@ public class DatabaseFrame extends JFrame
         removeObj = new RemoveMotorcycle();
         updateObj = new UpdateValues();
         statusObj = new AvailabilityLog();
-        String url = "jdbc:mysql://localhost:3306/Motorcycles";
+        String url;
         String username;
         String password;
         boolean badInput = false;
@@ -79,6 +79,8 @@ public class DatabaseFrame extends JFrame
                 Class.forName("com.mysql.cj.jdbc.Driver");
 
                 do {
+                    url = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter url",
+                            "Database URL", JOptionPane.PLAIN_MESSAGE);
                     username = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter username",
                             "Database", JOptionPane.PLAIN_MESSAGE);
                     password = JOptionPane.showInputDialog(DatabaseFrame.this, "Enter password",
